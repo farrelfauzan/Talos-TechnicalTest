@@ -12,6 +12,5 @@ async function bootstrap() {
     optionsSuccessStatus: 204,
   });
   await app.listen(3000);
-  console.log(process.env.JWT_SECRET_KEY);
 }
 bootstrap();
