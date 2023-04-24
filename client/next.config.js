@@ -1,18 +1,20 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
+require("dotenv").config();
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
 });
 
 module.exports = withBundleAnalyzer({
-  eslint: {
-    dirs: ['.'],
+  env: {
+    CLIENT_URL: process.env.CLIENT_URL,
+    API_URL: process.env.API_URL,
   },
-  images: {
-    domains: ['3.27.90.80'], // Add localhost to the allowed image domains
+  eslint: {
+    dirs: ["."],
   },
   poweredByHeader: false,
   trailingSlash: true,
-  basePath: '',
+  basePath: "",
   // The starter code load resources from `public` folder with `router.basePath` in React components.
   // So, the source code is "basePath-ready".
   // You can remove `basePath` if you don't need it.

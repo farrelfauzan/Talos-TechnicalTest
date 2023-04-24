@@ -1,13 +1,13 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-param-reassign */
-import axios from 'axios';
-import { deleteCookie, getCookie } from 'cookies-next';
-import { NextResponse } from 'next/server';
+import axios from "axios";
+import { deleteCookie, getCookie } from "cookies-next";
+import { NextResponse } from "next/server";
 
-const token = getCookie('USER_TOKEN_DATA_PLATFORM');
+const token = getCookie("USER_TOKEN_DATA_PLATFORM");
 
 const httpUsers = axios.create({
-  baseURL: 'http://localhost:3000/graphql',
+  baseURL: `${process.env.API_URL}/graphql`,
   timeout: 5000,
   headers: {
     Authorization: `Bearer ${token}`,
@@ -20,8 +20,8 @@ httpUsers.interceptors.request.use(
     if (token) {
       // config.headers.Authorization = `Bearer ${token}`;
       config.headers.Authorization = `Bearer ${token}`;
-      config.headers['Content-Type'] = 'application/json';
-      config.headers.Accept = 'application/json';
+      config.headers["Content-Type"] = "application/json";
+      config.headers.Accept = "application/json";
     }
     // Do something before request is sent
     return config;
@@ -45,8 +45,8 @@ httpUsers.interceptors.response.use(
     // Do something with response error
     if (status === 401) {
       if (status === 403) {
-        deleteCookie('USER_TOKEN_DATA_PLATFORM');
-        NextResponse.redirect('http://localhost:3001/auth/login');
+        deleteCookie("USER_TOKEN_DATA_PLATFORM");
+        NextResponse.redirect(`${process.env.CLIENT_URL}/auth/login`);
       }
     }
     return Promise.reject(error);
